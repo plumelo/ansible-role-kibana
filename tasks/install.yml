@@ -1,0 +1,33 @@
+---
+- name: Ensure Kibana user exists
+  user: name='{{ kibana_user }}' state=present
+
+- name: Ensure Kibana directory exists
+  file: path='{{ kibana_path }}' state=directory owner='{{ kibana_user }}' group='{{ kibana_user }}' mode='0755'
+
+- name: Download kibana
+  unarchive:
+    src: '{{ kibana_download_url }}'
+    dest: '{{ kibana_path }}'
+    remote_src:  yes
+    extra_opts: '--strip-components=1'
+    owner: '{{ kibana_user }}'
+    group: '{{ kibana_user }}'
+    creates: '{{ kibana_path }}/bin/kibana'
+
+- name: Configure Kibana
+  template:
+    src: kibana.yml.j2
+    dest: "{{ kibana_path }}/config/kibana.yml"
+  notify:
+    - restart kibana
+
+- name: Add systemd service
+  template:
+    src: kibana.service.j2
+    dest: /etc/systemd/system/kibana.service
+  notify:
+    - restart kibana
+
+- name: Enable Kibana service
+  systemd: name=kibana.service daemon-reload=yes enabled=yes state=started
