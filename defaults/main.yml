@@ -9,4 +9,15 @@ kibana_host: 0.0.0.0
 kibana_elasticsearch_host: 'localhost'
 kibana_elasticsearch_port: '9200'
 
+_kibana_defaults:
+  server.port: '{{ kibana_port }}'
+  server.host: '{{ kibana_host }}'
+  elasticsearch.url: 'http://{{ kibana_elasticsearch_host }}:{{ kibana_elasticsearch_port }}'
+  elasticsearch.preserveHost: true
+  kibana.index: '.kibana'
+  elasticsearch.shardTimeout: 0
+
+kibana_config: {}
+_kibana_config: '{{ _kibana_defaults|combine(kibana_config) }}'
+
 kibana_plugins: [ ]

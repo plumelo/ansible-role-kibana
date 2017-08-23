@@ -1,25 +1,5 @@
 ---
 
-- name: reload kibana
-  become: yes
-  service:
-    name: kibana
-    state: reloaded
-
 - name: restart kibana
   become: yes
-  service:
-    name: kibana
-    state: restarted
-
-- name: start kibana
-  become: yes
-  service:
-    name: kibana
-    state: started
-
-- name: stop kibana
-  become: yes
-  service:
-    name: kibana
-    state: stopped
+  service: name=kibana state=restarted

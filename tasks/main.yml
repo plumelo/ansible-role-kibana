@@ -1,5 +1,7 @@
 ---
 
-- name: Install Kibana
-  include: install.yml
+- include: install.yml
   tags: [kibana, kibana-install]
+
+- include: plugins.yml
+  tags: [kibana, kibana-plugins]
