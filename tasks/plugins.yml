@@ -1,0 +1,19 @@
+---
+
+- name: Get list of installed plugins.
+  shell: bin/kibana-plugin list
+  become_user: kibana
+  args:
+    chdir: '{{ kibana_path }}'
+  register: kibana_plugins_installed
+  when: kibana_plugins | length > 0
+  changed_when: false
+
+- name: Install configured plugins.
+  shell: bin/kibana-plugin install '{{ item }}'
+  become_user: kibana
+  args:
+    chdir: '{{ kibana_path }}'
+  with_items: '{{ kibana_plugins }}'
+  when: 'item not in kibana_plugins_installed.stdout'
+  notify: restart kibana
