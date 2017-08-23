@@ -20,4 +20,4 @@ _kibana_defaults:
 kibana_config: {}
 _kibana_config: '{{ _kibana_defaults|combine(kibana_config) }}'
 
-kibana_plugins: [ ]
+kibana_plugins: []
