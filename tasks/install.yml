@@ -14,6 +14,7 @@
     owner: '{{ kibana_user }}'
     group: '{{ kibana_user }}'
     creates: '{{ kibana_path }}/bin/kibana'
+  notify: restart kibana
 
 - name: Configure Kibana
   template:
