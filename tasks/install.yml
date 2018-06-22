@@ -1,15 +1,23 @@
 ---
+
 - name: Ensure Kibana user exists
-  user: name='{{ kibana_user }}' state=present
+  user:
+    name: '{{ kibana_user }}'
+    state: present
 
 - name: Ensure Kibana directory exists
-  file: path='{{ kibana_path }}' state=directory owner='{{ kibana_user }}' group='{{ kibana_user }}' mode='0755'
+  file:
+    path: '{{ kibana_path }}'
+    state: directory
+    owner: '{{ kibana_user }}'
+    group: '{{ kibana_user }}'
+    mode: '0755'
 
 - name: Download kibana
   unarchive:
     src: '{{ kibana_download_url }}'
     dest: '{{ kibana_path }}'
-    remote_src:  yes
+    remote_src: true
     extra_opts: '--strip-components=1'
     owner: '{{ kibana_user }}'
     group: '{{ kibana_user }}'
@@ -30,5 +38,9 @@
   notify: restart kibana
 
 - name: Enable Kibana service
-  systemd: name=kibana.service daemon_reload=yes enabled=yes state=restarted
+  systemd:
+    name: kibana.service
+    daemon_reload: true
+    enabled: true
+    state: restarted
   when: kibana_service.changed

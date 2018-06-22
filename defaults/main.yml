@@ -1,10 +1,11 @@
 ---
-kibana_version: 5.5.0
+
+kibana_version: 6.3.0
 
 kibana_path: /opt/kibana
 kibana_download_url: 'https://artifacts.elastic.co/downloads/kibana/kibana-{{ kibana_version }}-linux-x86_64.tar.gz'
 kibana_user: kibana
-kibana_port: 5061
+kibana_port: 5601
 kibana_host: 0.0.0.0
 kibana_elasticsearch_host: localhost
 kibana_elasticsearch_port: 9200
@@ -15,7 +16,14 @@ _kibana_defaults:
   elasticsearch.url: 'http://{{ kibana_elasticsearch_host }}:{{ kibana_elasticsearch_port }}'
   elasticsearch.preserveHost: true
   kibana.index: '.kibana'
+  logging.dest: '{{ kibana_path }}/kibana.log'
+  logging.verbose: true
   elasticsearch.shardTimeout: 0
+  elasticsearch.username: elastic
+  elasticsearch.password: changeme
+  # xpack.security.enabled: false
+  # xpack.monitoring.elasticsearch.username: true
+  # xpack.monitoring.elasticsearch.password: true
 
 kibana_config: {}
 _kibana_config: '{{ _kibana_defaults|combine(kibana_config) }}'

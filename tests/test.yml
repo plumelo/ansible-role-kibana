@@ -1,10 +1,17 @@
 ---
 
 - hosts: all
-  become: yes
+  become: true
   roles:
-    - role: kibana
-      kibana:
-        elasticsearch:
-          host: localhost
-          port: 9200
+    - role: elastic.elasticsearch
+      es_instance_name: "node1"
+      es_heap_size: "1g"
+      es_version: "6.3.0"
+      es_api_basic_auth_username: "elastic"
+      es_api_basic_auth_password: "changeme"
+      es_config:
+        xpack.monitoring.collection.enabled: true
+      es_xpack_features:
+        - security
+        - alerting
+    - role: plumelo.kibana
