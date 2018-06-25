@@ -3,15 +3,9 @@
 - hosts: all
   become: true
   roles:
-    - role: elastic.elasticsearch
-      es_instance_name: "node1"
-      es_heap_size: "1g"
-      es_version: "6.3.0"
-      es_api_basic_auth_username: "elastic"
-      es_api_basic_auth_password: "changeme"
-      es_config:
-        xpack.monitoring.collection.enabled: true
-      es_xpack_features:
-        - security
-        - alerting
     - role: plumelo.kibana
+      kibana_config:
+        elasticsearch.shardTimeout: 0
+        elasticsearch.username: "elastic"
+        elasticsearch.password: "changeme"
+        xpack.security.enabled: false
