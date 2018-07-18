@@ -1,11 +1,27 @@
 ---
 
+- hosts: localhost
+  tasks:
+    - lxd_container:
+        name: kibana
+        state: started
+
 - hosts: all
   become: true
+  gather_facts: false
   roles:
     - role: plumelo.kibana
       kibana_config:
+        server.port: 5601
+        server.host: "kibana.lxd"
         elasticsearch.shardTimeout: 0
         elasticsearch.username: "elastic"
         elasticsearch.password: "changeme"
-        xpack.security.enabled: false
+        kibana.index: ".kibana"
+        xpack.security.enabled: true
+        xpack.monitoring.enabled: true
+        xpack.monitoring.elasticsearch.url: "http://elasticsearch.lxd:9200"
+        xpack.monitoring.elasticsearch.username: "elastic"
+        xpack.monitoring.elasticsearch.password: "changeme"
+        xpack.monitoring.ui.container.elasticsearch.enabled: true
+        xpack.monitoring.kibana.collection.enabled: true

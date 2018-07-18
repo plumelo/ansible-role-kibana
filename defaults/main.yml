@@ -1,6 +1,6 @@
 ---
 
-kibana_version: 6.3.0
+kibana_version: 6.3.1
 
 kibana_path: /opt/kibana
 kibana_download_url: 'https://artifacts.elastic.co/downloads/kibana/kibana-{{ kibana_version }}-linux-x86_64.tar.gz'

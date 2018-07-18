@@ -1,0 +1,1 @@
+kibana ansible_connection=lxd ansible_python_interpreter='/usr/bin/python3'
