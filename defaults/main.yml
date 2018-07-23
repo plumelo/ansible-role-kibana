@@ -7,7 +7,7 @@ kibana_download_url: 'https://artifacts.elastic.co/downloads/kibana/kibana-{{ ki
 kibana_user: kibana
 kibana_port: 5601
 kibana_host: 0.0.0.0
-kibana_elasticsearch_host: elasticsearch.local
+kibana_elasticsearch_host: elasticsearch.lxd
 kibana_elasticsearch_port: 9200
 
 _kibana_defaults:
